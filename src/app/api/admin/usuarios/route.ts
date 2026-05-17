@@ -6,7 +6,7 @@ export async function GET() {
 
     if (!session) return Response.json({error:"Não autorizado"},{status:401})
 
-    if (session.user.role !== "ADMIN") return Response.json({error:"Não autorizado"},{status:403})
+    if (session?.user?.role !== "ADMIN") return Response.json({error:"Não autorizado"},{status:403})
 
     const usuarios = await prisma.usuario.findMany({
         orderBy: {

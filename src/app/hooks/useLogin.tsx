@@ -2,12 +2,12 @@ import { useState } from "react"
 import { signIn } from "next-auth/react"
 
 export function useLogin() {
-    const [error, setError] = useState("")
+    const [erro, setErro] = useState("")
     const [email, setEmail] = useState("")
     const [senha, setSenha] = useState("")
 
     async function handleLogin() {
-        const res = await signIn("credentials", {
+        await signIn("credentials", {
         email: email,
         password: senha,
 
@@ -17,7 +17,7 @@ export function useLogin() {
     }
 
     return {
-        error,
+        erro,
         email, 
         setEmail, 
         senha, 

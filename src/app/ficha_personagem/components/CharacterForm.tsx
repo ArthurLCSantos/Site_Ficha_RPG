@@ -7,42 +7,39 @@ import SkillTable from "../components/tables/SkillTable";
 import Button from "../../components/Button"
 
 import { skills1, skills2, skills3 } from "../data/skills";
-import { useSkills } from "../hooks/useSkills";
 
 import { useCharacterForm } from "../hooks/useCharacterForm";
 
-export default function CharacterForm({initialData, characterId, canEdit}) {c
+export default function CharacterForm({initialData, characterId, canEdit}) {
 
     const {
-      nome,
-      setNome,
+        nome,
+        setNome,
 
-      origem,
-      setOrigem,
+        origem,
+        setOrigem,
 
-      especializacao,
-      setEspecializacao,
+        especializacao,
+        setEspecializacao,
 
-      nivel,
-      setNivel,
+        nivel,
+        setNivel,
 
-      atributos,
-      updateAtributo,
+        atributos,
+        updateAtributo,
 
-      habilidades,
-      setHabilidades,
+        habilidades,
+        setHabilidades,
 
-      isEditing,
+        skillsState,
+        updateSkillAttribute,
+        updateSkillTraining,
 
-      deletePersonagem,
-      salvarPersonagem
+        isEditing,
+
+        deletePersonagem,
+        salvarPersonagem
     } = useCharacterForm(initialData, characterId)
-
-    const {
-      skillsState,
-      updateSkillAttribute,
-      updateSkillTraining
-    } = useSkills(initialData)
 
   return <div className="bg-zinc-100 flex flex-col items-center w-full lg:w-3/4 p-5 lg:p-20 gap-5">
     {/* Informações */}

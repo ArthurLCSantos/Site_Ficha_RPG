@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation"
 export function useRegister() {
 
   const router = useRouter()
-  const [error, setError] = useState("")
+  const [erro, setErro] = useState("")
   const [nome, setNome] = useState("")
   const [email, setEmail] = useState("")
   const [senha, setSenha] = useState("")
@@ -26,11 +26,11 @@ export function useRegister() {
     const data = await res.json()
 
     if (!res.ok) {
-      setError(data.error||"Erro no servidor!")
+      setErro(data.error||"Erro no servidor!")
       return
     }
     router.push("/DashboardAdmin")
   }
 
-  return {error, nome, setNome, email, setEmail, senha, setSenha, handleRegister}
+  return {erro, nome, setNome, email, setEmail, senha, setSenha, handleRegister}
 }

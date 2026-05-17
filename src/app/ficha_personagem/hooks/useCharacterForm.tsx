@@ -3,6 +3,8 @@
 import { useState } from "react"
 import { useRouter } from "next/navigation"
 
+import { allSkills } from "../data/skills"
+
 export function useCharacterForm(initialData?,characterId?) {
     const router = useRouter()
     const isEditing = !!characterId
@@ -33,7 +35,43 @@ export function useCharacterForm(initialData?,characterId?) {
         )
     }
 
-      async function deletePersonagem() {
+    const initialSkillsState = allSkills.reduce((acc, skill) => {
+        acc[skill.nome] = {
+        atributo: skill.select
+        ? skill.select[0]
+        : skill.atributo,
+
+        treinada: false
+        };
+
+        return acc;
+    }, {});
+    
+    const [skillsState, setSkillsState] = useState(initialData ? initialData.pericias : initialSkillsState);
+
+    function updateSkillAttribute(skillName, value) {
+        setSkillsState(prev => ({
+            ...prev,
+
+            [skillName]: {
+            ...prev[skillName],
+            atributo: value
+            }
+        }))
+    }
+
+    function updateSkillTraining(skillName, value) {
+        setSkillsState(prev => ({
+            ...prev,
+
+            [skillName]: {
+            ...prev[skillName],
+            treinada: value
+            }
+        }))
+    }
+
+    async function deletePersonagem() {
         const res = await fetch("/api/personagem/delete", {
         method: "DELETE",
         headers: {"Content-Type":"application/json"},
@@ -67,7 +105,7 @@ export function useCharacterForm(initialData?,characterId?) {
                 pericias: skillsState
             }
 
-        const res = await fetch(url, {
+        await fetch(url, {
             method,
             headers: {"Content-Type":"application/json"},
             body: JSON.stringify(body)
@@ -94,6 +132,10 @@ export function useCharacterForm(initialData?,characterId?) {
 
         habilidades,
         setHabilidades,
+
+        skillsState,
+        updateSkillAttribute,
+        updateSkillTraining,
 
         isEditing,
 
