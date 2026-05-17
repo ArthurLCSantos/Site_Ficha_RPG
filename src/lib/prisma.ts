@@ -1,8 +1,8 @@
-import { PrismaClient } from "@/generated/prisma/client"
+import { PrismaClient } from "@prisma/client"
 import { PrismaPg } from "@prisma/adapter-pg"
 
 const globalForPrisma = globalThis as unknown as {
-  prisma: PrismaClient | undefined
+  prisma: PrismaClient
 }
 
 const adapter = new PrismaPg({
@@ -10,7 +10,7 @@ const adapter = new PrismaPg({
 })
 
 export const prisma =
-  globalForPrisma.prisma ??
+  globalForPrisma.prisma ||
   new PrismaClient({
     adapter,
   })
