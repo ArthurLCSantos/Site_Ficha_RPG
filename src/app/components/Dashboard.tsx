@@ -14,13 +14,26 @@ export function SkeletonDashboard() {
         )
 }
 
-export function Dashboard({
+type DataColumn<T> = {
+    key: keyof T,
+    label: string
+}
+
+type DashboardProps<T> = {
+    titulo?: string,
+    columns: DataColumn<T>[],
+    lista: T[],
+    onCreate?: () => void,
+    elementOnClick: (value:string) => void
+}
+
+export function Dashboard<T extends {id:string}>({
     titulo,
     columns,
     lista,
     onCreate,
     elementOnClick
-}) {
+} : DashboardProps<T>) {
     return (
         <div className="w-full">
 
@@ -44,8 +57,8 @@ export function Dashboard({
                     {lista.map((el,index)=>(
                         <tr key={index} onClick={()=>elementOnClick(el.id)}>
                             {columns.map((column)=> (
-                                <td key={column.key} className="lg:text-xl py-5 border-b-2 border-zinc-400 text-ellipsis">
-                                    <p className="lg:text-xl line-clamp-1">{el[column.key]}</p>
+                                <td key={String(column.key)} className="lg:text-xl py-5 border-b-2 border-zinc-400 text-ellipsis">
+                                    <p className="lg:text-xl line-clamp-1">{String(el[column.key])}</p>
                                 </td>
                             ))}
                         </tr>

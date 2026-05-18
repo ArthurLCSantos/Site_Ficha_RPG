@@ -1,22 +1,18 @@
-export const skills1 = [
-{
-    nome: "Luta",
-    select: ["Força", "Destreza"],
-},
+import { Skill } from "@/src/types/skill";
+
+export const skills1 : Skill[] = [
+{ nome: "Luta", select: ["Força", "Destreza"] },
 { nome: "Atletismo", atributo: "Força" },
 { nome: "Potência", atributo: "Força" },
 { nome: "Limepeza", atributo: "Força" },
-{
-    nome: "Pontaria",
-    select: ["Força", "Destreza"],
-},
+{ nome: "Pontaria", select: ["Força", "Destreza"] },
 { nome: "Destreza", atributo: "Destreza" },
 { nome: "Acrobacia", atributo: "Destreza" },
 { nome: "Furtividade", atributo: "Destreza" },
 { nome: "Prestidigitação", atributo: "Destreza" },
 ];
 
-export const skills2 = [
+export const skills2 : Skill[] = [
 { nome: "Reflexos", atributo: "Destreza" },
 { nome: "Fortitude", atributo: "Constituição" },
 { nome: "Resistência à Toxinas", atributo: "Constituição" },
@@ -28,7 +24,7 @@ export const skills2 = [
 { nome: "Conhecimento Mundano", atributo: "Sabedoria" },
 ];
 
-export const skills3 = [
+export const skills3 : Skill[] = [
 { nome: "Vontade", atributo: "Sabedoria" },
 { nome: "Astúcia", atributo: "Inteligência" },
 { nome: "Direção", atributo: "Inteligência" },
@@ -40,4 +36,4 @@ export const skills3 = [
 { nome: "Performance", atributo: "Carisma" },
 ];
 
-export const allSkills = [...skills1, ...skills2, ...skills3]
+export const allSkills : Skill[] = [...skills1, ...skills2, ...skills3]

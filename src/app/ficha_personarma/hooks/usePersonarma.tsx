@@ -2,8 +2,14 @@
 
 import { useState } from "react"
 import { useRouter } from "next/navigation";
+import { PersonarmaData } from "@/src/types/personarma";
 
-export function usePersonarma(initialData?, personarmaId?) {
+type UsePersonarmaProps = {
+  initialData?: PersonarmaData,
+  personarmaId?: String
+}
+
+export function usePersonarma({initialData, personarmaId} : UsePersonarmaProps) {
     const isEditing = !!personarmaId
     const router = useRouter()
     const [erro, setErro] = useState("")
@@ -19,9 +25,9 @@ export function usePersonarma(initialData?, personarmaId?) {
 
     const [habilidades, setHabilidades] = useState(initialData?.habilidades || "")
 
-    function updateAtributo(index, value) {
+    function updateAtributo(index:number, value: string) {
         setAtributos(( prev ) =>
-            prev.map(( item, i ) =>
+            prev.map(( item, i : number ) =>
             i === index
                 ? { ...item, valor:Number(value) }
                 : item

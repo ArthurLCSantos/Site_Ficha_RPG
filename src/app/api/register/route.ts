@@ -1,22 +1,21 @@
 import bcrypt from "bcrypt"
-
 import { prisma } from "@/src/lib/prisma"
 
-export async function POST(req) {
+export async function POST(req : Request) {
     const {nome, email, senha} = await req.json()
-    if (!(body.nome && body.email && body.senha)) return Response.json({error:"Campos obrigatórios estão faltando!"},{status:400})
+    if (!(nome && email && senha)) return Response.json({error:"Campos obrigatórios estão faltando!"},{status:400})
     try {
 
         const emailExist = await prisma.usuario.findUnique({where:{email}})
 
         if (emailExist) return Response.json({error:"Já existe um usuário com esse email!"},{status:403})
 
-        const hashedPassword = await bcrypt.hash(body.senha,10)
+        const hashedPassword = await bcrypt.hash(senha,10)
 
         const user = await prisma.usuario.create({
             data: {
-                nome:  body.nome,
-                email: body.email,
+                nome:  nome,
+                email: email,
                 senha: hashedPassword,
             }
         })

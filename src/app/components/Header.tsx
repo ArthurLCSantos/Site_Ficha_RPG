@@ -1,4 +1,9 @@
-export default function Header({mode, setMode}) {
+type HeaderProps = {
+    mode: string,
+    setMode: (value:string) => void
+}
+
+export default function Header({mode, setMode} : HeaderProps) {
     return <div className="bg-zinc-50 flex">
         <div 
         style={mode=="register"?{backgroundColor:"bg-zinc-400"}:{}}

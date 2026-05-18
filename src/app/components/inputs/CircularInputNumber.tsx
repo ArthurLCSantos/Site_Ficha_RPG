@@ -1,10 +1,18 @@
+
+
 export function SkeletonCircularInputNumber() {
   return (
     <div className="rounded-full bg-zinc-400 size-20"></div>
   );
 }
 
-export default function CircularInputNumber({ texto, value, onChange }) {
+type CircularInputNumberProps = {
+  texto:    string,
+  value:    string,
+  onChange: (value: string) => void 
+}
+
+export default function CircularInputNumber({ texto, value, onChange } : CircularInputNumberProps) {
   return (
     <div className="text-center">
       <p className="font-bold text-center text-md">{texto}</p>

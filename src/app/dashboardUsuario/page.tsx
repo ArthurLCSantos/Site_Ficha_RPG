@@ -11,6 +11,6 @@ export default async function DashboardUsuario() {
   }
 
   return (
-    <DashboardUsuarioClient user={session.user} />
+    <DashboardUsuarioClient />
   )
 }

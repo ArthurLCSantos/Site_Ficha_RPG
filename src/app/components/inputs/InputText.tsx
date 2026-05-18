@@ -1,4 +1,3 @@
-
 export function SkeletonInputText() {
   return (
     <div className="w-full text-black">
@@ -8,7 +7,14 @@ export function SkeletonInputText() {
   );
 }
 
-export default function InputText({ texto, value, onChange, password=false }) {
+type InputTextProps = {
+  texto:    string,
+  value:    string,
+  onChange: ( value:string ) => void ,
+  password?: boolean
+}
+
+export default function InputText({ texto, value, onChange, password=false } : InputTextProps) {
   return (
     <div className="w-full text-black">
       {texto && <p className="border-2 border-b-0 border-black w-min px-2 font-bold text-sm md:text-base">{texto}</p>}

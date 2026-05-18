@@ -1,7 +1,7 @@
 import { auth } from "@/src/lib/auth"
 import { prisma } from "@/src/lib/prisma"
 
-export async function POST(req) {
+export async function POST(req : Request) {
     const session = await auth();
 
     if (!session?.user?.id) {

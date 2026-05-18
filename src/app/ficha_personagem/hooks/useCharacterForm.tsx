@@ -4,8 +4,15 @@ import { useState } from "react"
 import { useRouter } from "next/navigation"
 
 import { allSkills } from "../data/skills"
+import { PersonagemData } from "@/src/types/personagem"
+import { SkillsState } from "@/src/types/skill"
 
-export function useCharacterForm(initialData?,characterId?) {
+type useCharacterFormProps = {
+    initialData?: PersonagemData,
+    characterId?: string
+}
+
+export function useCharacterForm({initialData,characterId}: useCharacterFormProps) {
     const router = useRouter()
     const isEditing = !!characterId
     const [nome,setNome] = useState(initialData?.nome || "")
@@ -25,7 +32,7 @@ export function useCharacterForm(initialData?,characterId?) {
 
     const [habilidades, setHabilidades] = useState(initialData?.habilidades || "")
 
-    function updateAtributo(index, value) {
+    function updateAtributo(index:number, value:string) {
         setAtributos(( prev ) =>
             prev.map(( item, i ) =>
             i === index
@@ -35,21 +42,18 @@ export function useCharacterForm(initialData?,characterId?) {
         )
     }
 
-    const initialSkillsState = allSkills.reduce((acc, skill) => {
+    const initialSkillsState = allSkills.reduce<SkillsState>((acc, skill) => {
         acc[skill.nome] = {
-        atributo: skill.select
-        ? skill.select[0]
-        : skill.atributo,
-
+        atributo: skill.select ? skill.select[0] : skill.atributo ?? "",
         treinada: false
         };
 
         return acc;
     }, {});
     
-    const [skillsState, setSkillsState] = useState(initialData ? initialData.pericias : initialSkillsState);
+    const [skillsState, setSkillsState] = useState<SkillsState>(initialData ? initialData.pericias : initialSkillsState);
 
-    function updateSkillAttribute(skillName, value) {
+    function updateSkillAttribute(skillName: string, value: string) {
         setSkillsState(prev => ({
             ...prev,
 
@@ -60,7 +64,7 @@ export function useCharacterForm(initialData?,characterId?) {
         }))
     }
 
-    function updateSkillTraining(skillName, value) {
+    function updateSkillTraining(skillName: string, value: boolean) {
         setSkillsState(prev => ({
             ...prev,
 

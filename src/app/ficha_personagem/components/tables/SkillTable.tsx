@@ -1,4 +1,23 @@
-export default function SkillTable({ skills, skillsState, updateSkillAttribute, updateSkillTraining }) {
+import { Skill, SkillsState } from "@/src/types/skill"
+
+type SkillTableProps = {
+
+  skills: Skill[]
+
+  skillsState: SkillsState
+
+  updateSkillAttribute: (
+    skillName: string,
+    value: string
+  ) => void
+
+  updateSkillTraining: (
+    skillName: string,
+    value: boolean
+  ) => void
+}
+
+export default function SkillTable({ skills, skillsState, updateSkillAttribute, updateSkillTraining } : SkillTableProps) {
   return (
     <div className="overflow-x-auto w-full">
       <table className="w-full border-collapse text-sm md:text-base">
@@ -13,7 +32,7 @@ export default function SkillTable({ skills, skillsState, updateSkillAttribute, 
               <td className="py-2 text-left">
                 {skill.select ? (
                   <select
-                  value={skillsState[skill.nome].atributos}
+                  value={skillsState[skill.nome].atributo}
                   onChange={(e)=>updateSkillAttribute(skill.nome, e.target.value)}
                   >
                     {skill.select.map((option) => (

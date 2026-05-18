@@ -1,6 +1,13 @@
+import { Atributo } from "@/src/types/personagem"
 import { calculateModifier } from "../../ficha_personagem/utils/modifier"
 
-export default function RectangleInputNumber({ atributo, onChange, modificador=true }) {
+type RectangleInputNumberProps = {
+  atributo: Atributo,
+  onChange: (value: string) => void,
+  modificador?: boolean
+}
+
+export default function RectangleInputNumber({ atributo, onChange, modificador=true } : RectangleInputNumberProps) {
   return (
     <div className="border-2 border-black">
       <p className=" font-bold lg:text-xl w-full text-center border-b-2 border-black">{atributo.nome}</p>

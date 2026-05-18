@@ -6,11 +6,14 @@ import ImageInput from "../../components/inputs/ImageInput";
 import SkillTable from "../components/tables/SkillTable";
 import Button from "../../components/Button"
 
+import { Atributo, PersonagemData } from "@/src/types/personagem";
 import { skills1, skills2, skills3 } from "../data/skills";
 
 import { useCharacterForm } from "../hooks/useCharacterForm";
 
-export default function CharacterForm({initialData, characterId, canEdit}) {
+type CharacterFormProps = {initialData?:PersonagemData, characterId?: string, canEdit?: boolean}
+
+export default function CharacterForm({initialData, characterId, canEdit} : CharacterFormProps) {
 
     const {
         nome,
@@ -39,30 +42,30 @@ export default function CharacterForm({initialData, characterId, canEdit}) {
 
         deletePersonagem,
         salvarPersonagem
-    } = useCharacterForm(initialData, characterId)
+    } = useCharacterForm({initialData, characterId})
 
   return <div className="bg-zinc-100 flex flex-col items-center w-full lg:w-3/4 p-5 lg:p-20 gap-5">
     {/* Informações */}
     <div className="w-full grid grid-cols-2 gap-5">
       <ImageInput></ImageInput> 
 
-      <InputText texto={"Nome"}           value={nome}           onChange={(data)=>setNome(data)}          />
-      <InputText texto={"Origem"}         value={origem}         onChange={(data)=>setOrigem(data)}        />
-      <InputText texto={"Especialização"} value={especializacao} onChange={(data)=>setEspecializacao(data)}/>
+      <InputText texto={"Nome"}           value={nome}           onChange={(data:string)=>setNome(data)}          />
+      <InputText texto={"Origem"}         value={origem}         onChange={(data:string)=>setOrigem(data)}        />
+      <InputText texto={"Especialização"} value={especializacao} onChange={(data:string)=>setEspecializacao(data)}/>
     </div>
 
     {/* Nível */}
-    <CircularInputNumber texto={"Nível"} value={nivel} onChange={(data)=>setNivel(Number(data))} ></CircularInputNumber>
+    <CircularInputNumber texto={"Nível"} value={String(nivel)} onChange={(data:string)=>setNivel(Number(data))} ></CircularInputNumber>
 
     {/* Atributos */}
     <div>
       <p className="text-center text-4xl lg:text-8xl text-black">Atributos</p>
       <div className="grid grid-cols-3 lg:gap-x-20 gap-y-5 w-full">
-        {atributos.map((atributo,index) => 
+        {atributos.map((atributo : Atributo, index:number) => 
         <RectangleInputNumber
           key={index}
           atributo={atributo}
-          onChange={(value) => updateAtributo(index,value)}
+          onChange={(value:string) => updateAtributo(index,value)}
           ></RectangleInputNumber>)}
       </div>
     </div>

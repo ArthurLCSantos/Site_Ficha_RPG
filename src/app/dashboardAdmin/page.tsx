@@ -1,8 +1,8 @@
 import { auth } from "@/src/lib/auth"
 import { redirect } from "next/navigation"
 import DashboardAdminClient from "./DashboardAdminClient"
-export default async function AdminPage() {
 
+export default async function AdminPage() {
   const session = await auth()
 
   if (!session) {
@@ -14,6 +14,6 @@ export default async function AdminPage() {
   }
 
   return (
-    <DashboardAdminClient adminId={session.user.id}/>
+    <DashboardAdminClient adminId={session?.user?.id} />
   )
 }

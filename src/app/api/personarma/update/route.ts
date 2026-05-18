@@ -1,7 +1,7 @@
 import { auth } from "@/src/lib/auth"
 import { prisma } from "@/src/lib/prisma"
 
-export async function PUT(req) {
+export async function PUT(req : Request) {
     const {
         id, 
         nome,

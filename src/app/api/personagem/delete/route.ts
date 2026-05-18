@@ -1,7 +1,7 @@
 import { prisma } from "@/src/lib/prisma"
 import { auth } from "@/src/lib/auth"
 
-export async function DELETE(req) {
+export async function DELETE(req : Request) {
     const {id} = await req.json()
     const session = await auth()
 

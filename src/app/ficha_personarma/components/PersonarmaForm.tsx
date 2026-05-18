@@ -6,8 +6,15 @@ import ImageInput from "../../components/inputs/ImageInput";
 import Button from "../../components/Button"
 
 import { usePersonarma } from "../hooks/usePersonarma";
+import { PersonarmaData } from "@/src/types/personarma";
 
-export default function PersonarmaForm({initialData, personarmaId, canEdit}) {
+type PersonarmaFormProps = {
+  initialData?: PersonarmaData,
+  personarmaId?: string,
+  canEdit: boolean
+}
+
+export default function PersonarmaForm({initialData, personarmaId, canEdit} : PersonarmaFormProps) {
     
       const {
         erro,
@@ -31,30 +38,30 @@ export default function PersonarmaForm({initialData, personarmaId, canEdit}) {
 
         deletePersonarma,
         savePersonarma
-      } = usePersonarma(initialData, personarmaId)
+      } = usePersonarma({initialData, personarmaId})
 
     return <div className="bg-zinc-100 flex flex-col items-center w-full lg:w-3/4 p-10 gap-5 lg:gap-20">
         {/* Informações */}
         <div className="w-full grid grid-cols-2 gap-5">
           <ImageInput></ImageInput> 
 
-          <InputText texto={"Nome"}           value={nome}           onChange={(data)=>setNome(data)}          />
-          <InputText texto={"Objeto"}         value={objeto}         onChange={(data)=>setObjeto(data)}        />
+          <InputText texto={"Nome"}           value={nome}           onChange={(data:string)=>setNome(data)}          />
+          <InputText texto={"Objeto"}         value={objeto}         onChange={(data:string)=>setObjeto(data)}        />
         </div>
 
         {/* Nível */}
-        <CircularInputNumber texto={"Nível"} value={nivel} onChange={(data)=>setNivel(Number(data))} ></CircularInputNumber>
+        <CircularInputNumber texto={"Nível"} value={String(nivel)} onChange={(data)=>setNivel(Number(data))} ></CircularInputNumber>
 
         {/* Atributos */}
         <div className="min-w-5/6">
           <p className="text-center text-2xl lg:text-8xl text-black">Atributos</p>
           <div className="grid grid-cols-3 gap-x-5 lg:gap-x-20 gap-y-5 w-full lg:px-20">
-            {atributos.map((atributo,index) => 
+            {atributos.map((atributo, index) => 
             <RectangleInputNumber
               key={index}
               atributo={atributo}
               modificador={false}
-              onChange={(value) => updateAtributo(index,value)}
+              onChange={(value:string) => updateAtributo(index,value)}
               ></RectangleInputNumber>)}
           </div>
         </div>
