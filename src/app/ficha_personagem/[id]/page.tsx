@@ -19,7 +19,8 @@ export default async function EditFicha({params} : {params:{id:string}}) {
   const personagem: PersonagemData = {
     ...personagemDB,
     atributos: personagemDB?.atributos as Atributo[],
-    pericias: personagemDB?.pericias as SkillsState
+    pericias: personagemDB?.pericias as SkillsState,
+    imagem_url: personagemDB.imagem_url ?? undefined
   }
 
   return (
