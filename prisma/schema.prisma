@@ -45,7 +45,7 @@ model Personagem {
 
   habilidades     String @default("")
 
-  imagem          String?
+  imagem_url      String?
 
   usuarioId       String
   usuario         Usuario @relation(fields: [usuarioId], references: [id], onDelete: Cascade)
@@ -55,20 +55,20 @@ model Personagem {
 }
 
 model Personarma {
-  id String @id @default(cuid())
+  id           String @id @default(cuid())
 
-  nome String
-  objeto String
+  nome         String
+  objeto       String
 
-  nivel Int
+  nivel        Int
 
-  atributos Json
+  atributos    Json
 
-  habilidades String
+  habilidades  String
 
-  imagem String?
+  imagem_url   String?
 
-  usuarioId String
+  usuarioId    String
   usuario Usuario @relation(fields: [usuarioId], references: [id], onDelete: Cascade)
 }
  

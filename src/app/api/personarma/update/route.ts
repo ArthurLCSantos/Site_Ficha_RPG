@@ -8,8 +8,8 @@ export async function PUT(req : Request) {
         objeto,
         nivel,
         atributos,
-        habilidades,
-        imagem_url} = await req.json()
+        habilidades
+    } = await req.json()
 
     const session = await auth()
         
@@ -29,8 +29,7 @@ export async function PUT(req : Request) {
                 objeto,
                 nivel,
                 atributos,
-                habilidades,
-                imagem_url
+                habilidades
             }
         })
     

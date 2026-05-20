@@ -16,8 +16,7 @@ export async function POST(req : Request) {
         objeto,
         nivel,
         atributos,
-        habilidades,
-        imagem_url
+        habilidades
     } = await req.json()
 
     const personarma = 
@@ -28,7 +27,6 @@ export async function POST(req : Request) {
                 nivel,
                 atributos,
                 habilidades,
-                imagem_url,
                 usuarioId:session.user.id
             }
         })
