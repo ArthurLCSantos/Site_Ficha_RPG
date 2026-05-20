@@ -21,7 +21,7 @@ export default async function EditPersonarma({params}:{params:{id:string}}) {
     const personarma: PersonarmaData = {
         ...personarmaDB,
         atributos: personarmaDB.atributos as Atributo[],
-        imagem: personarmaDB.imagem ? personarmaDB.imagem : undefined
+        imagem_url: personarmaDB.imagem_url ? personarmaDB.imagem_url : undefined
     }
 
     return (

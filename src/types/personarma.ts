@@ -19,7 +19,7 @@ export type PersonarmaData = {
 
   habilidades: string
 
-  imagem?: string
+  imagem_url?: string
 
   usuarioId: string 
 }

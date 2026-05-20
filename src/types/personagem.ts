@@ -24,5 +24,7 @@ export type PersonagemData = {
   habilidades: string
 
   pericias: SkillsState
+
+  imagem_url?: string
 }
 
