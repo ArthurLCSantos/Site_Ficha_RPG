@@ -27,6 +27,6 @@ export async function POST(req : Request) {
         })
 
     } catch (err) {
-        return Response.json({erro:`Erro no Servidor: ${err}`},{status:500})
+        return Response.json({error:`Erro no Servidor: ${err}`},{status:500})
     }
 }

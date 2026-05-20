@@ -15,10 +15,10 @@ export async function PUT(req : Request) {
         
     const personarma = await prisma.personarma.findUnique({where: {id}})
 
-    if (!personarma) return Response.json({erro:"Personagem não encontrado"},{status:404})
+    if (!personarma) return Response.json({error:"Personagem não encontrado"},{status:404})
 
     if (personarma?.usuarioId !== session?.user?.id) {
-        return Response.json({erro:"Não autorizado"},{status:403})
+        return Response.json({error:"Não autorizado"},{status:403})
     }
 
     const updated = 

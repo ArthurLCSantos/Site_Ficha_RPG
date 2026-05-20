@@ -16,8 +16,8 @@ export async function PUT(req : Request) {
     
     const personagem = await prisma.personagem.findUnique({where: {id}})
     
-    if (!personagem) return Response.json({erro:"Personagem não encontrado"},{status:404})
-    if (personagem?.usuarioId !== session?.user?.id) return Response.json({erro:"Não autorizado"},{status:403})
+    if (!personagem) return Response.json({error:"Personagem não encontrado"},{status:404})
+    if (personagem?.usuarioId !== session?.user?.id) return Response.json({error:"Não autorizado"},{status:403})
 
     const updated = await prisma.personagem.update({
             where: {id},

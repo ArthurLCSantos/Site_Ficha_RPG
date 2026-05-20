@@ -8,7 +8,7 @@ export async function DELETE(req : Request) {
     const personarma = await prisma.personarma.findUnique({where:{id}})
 
     if (!personarma) return Response.json({error:"Personarma não encontrado"},{status:404})
-    if (personarma?.usuarioId !== session?.user?.role) return Response.json({erro:"Não autorizado"},{status:403})
+    if (personarma?.usuarioId !== session?.user?.role) return Response.json({error:"Não autorizado"},{status:403})
 
     await prisma.personarma.delete({where: {id}})
     
