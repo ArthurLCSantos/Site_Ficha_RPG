@@ -9,11 +9,11 @@ export default async function AdminPage() {
     redirect("/")
   }
 
-  if (session.user?.role !== "ADMIN") {
+  if (session.user.role !== "ADMIN") {
     redirect("/dashboardUsuario")
   }
 
   return (
-    <DashboardAdminClient adminId={session?.user?.id} />
+    <DashboardAdminClient adminId={session.user.id} />
   )
 }

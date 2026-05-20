@@ -29,7 +29,7 @@ export function useRegister() {
       setErro(data.error||"Erro no servidor!")
       return
     }
-    router.push("/DashboardAdmin")
+    router.push("/dashboardAdmin")
   }
 
   return {erro, nome, setNome, email, setEmail, senha, setSenha, handleRegister}
