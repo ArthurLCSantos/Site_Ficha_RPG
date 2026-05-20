@@ -28,29 +28,33 @@ export const {
 
             async authorize(credentials) {
 
+                if (!credentials?.email || !credentials.password) {
+                    return null
+                }
+
                 const user = 
                     await prisma.usuario.findUnique({
                         where: {
-                            email:credentials.email
+                            email: String(credentials.email)
                         }
                     })
 
-                if (!user) return Response.json({error:"Email não encontrado!"},{status:404})
+                if (!user) return null
 
                 const passwordMatch =
                     await bcrypt.compare(
-                        credentials.password,
+                        String(credentials.password),
                         user.senha
                     )
                 
-                if (!passwordMatch) return Response.json({error:"Senha incorreta!"},{status:402})
+                if (!passwordMatch) return null
 
-                return Response.json({
+                return {
                     id: user.id,
                     name: user.nome,
                     email: user.email,
                     role: user.role,
-                })
+                }
 
             }
         })
@@ -59,7 +63,6 @@ export const {
     callbacks: {
         async jwt({ token, user }) {
             if (user) {
-                token.role = user.role
                 token.id   = user.id
             }
 
@@ -67,9 +70,10 @@ export const {
         },
 
         async session({ session, token }) {
-            session.user.id   = token.id
-            session.user.role = token.role
-        
+
+            if ( session.user ) {
+                session.user.id   = token.id as string
+            }
             return session
         }
     },
