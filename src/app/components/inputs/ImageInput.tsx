@@ -90,7 +90,10 @@ export default function ImageInput({
       hover:border-zinc-600
       hover:bg-zinc-100
       bg-center
-      size-100
+      size-full
+      h-50
+      lg:size-70
+      xl:size-90
       "
     >
 
