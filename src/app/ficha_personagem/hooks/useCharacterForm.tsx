@@ -18,6 +18,7 @@ export function useCharacterForm({initialData,characterId}: useCharacterFormProp
     const [nome,setNome] = useState(initialData?.nome || "")
     const [origem,setOrigem] = useState(initialData?.origem || "")
     const [especializacao,setEspecializacao] = useState(initialData?.especializacao || "")
+    const [imagemURL, setImagemURL] = useState(initialData?.imagem_url || "")
 
     const [nivel, setNivel] = useState(initialData?.nivel || 0)
 
@@ -96,6 +97,7 @@ export function useCharacterForm({initialData,characterId}: useCharacterFormProp
                 nome,
                 origem,
                 especializacao,
+                imagem_url:imagemURL,
                 nivel,
                 atributos,
                 pericias: skillsState
@@ -104,6 +106,7 @@ export function useCharacterForm({initialData,characterId}: useCharacterFormProp
                 nome,
                 origem,
                 especializacao,
+                imagem_url:imagemURL,
                 nivel,
                 atributos,
                 pericias: skillsState
@@ -127,6 +130,9 @@ export function useCharacterForm({initialData,characterId}: useCharacterFormProp
 
         especializacao,
         setEspecializacao,
+
+        imagemURL,
+        setImagemURL,
 
         nivel,
         setNivel,

@@ -13,6 +13,7 @@ export async function POST(req : Request) {
 
     const {
         nome,
+        imagem_url,
         objeto,
         nivel,
         atributos,
@@ -23,6 +24,7 @@ export async function POST(req : Request) {
         await prisma.personarma.create({
             data: {
                 nome,
+                imagem_url,
                 objeto,
                 nivel,
                 atributos,

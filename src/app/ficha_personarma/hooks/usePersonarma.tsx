@@ -14,6 +14,7 @@ export function usePersonarma({initialData, personarmaId} : UsePersonarmaProps) 
     const router = useRouter()
     const [erro, setErro] = useState("")
     const [nome,setNome] = useState(initialData?.nome || "")
+    const [imagemURL, setImagemURL] = useState(initialData?.imagem_url || "")
     const [objeto,setObjeto] = useState(initialData?.objeto || "")
     const [nivel,setNivel] = useState(initialData?.nivel || 0)
 
@@ -49,7 +50,7 @@ export function usePersonarma({initialData, personarmaId} : UsePersonarmaProps) 
         return
       }
 
-      router.push("/dashboardUsuario")
+      router.back()
     }
 
     async function savePersonarma() {
@@ -61,6 +62,7 @@ export function usePersonarma({initialData, personarmaId} : UsePersonarmaProps) 
         const body = isEditing ? {
               id: personarmaId,
               nome,
+              imagem_url: imagemURL,
               objeto,
               nivel,
               atributos,
@@ -68,6 +70,7 @@ export function usePersonarma({initialData, personarmaId} : UsePersonarmaProps) 
             } :
             {
               nome,
+              imagem_url: imagemURL,
               objeto,
               nivel,
               atributos,
@@ -87,7 +90,7 @@ export function usePersonarma({initialData, personarmaId} : UsePersonarmaProps) 
             return
         }
 
-        router.push("/dashboardUsuario")
+        router.back()
     }
 
     return {
@@ -95,6 +98,9 @@ export function usePersonarma({initialData, personarmaId} : UsePersonarmaProps) 
 
         nome,
         setNome,
+
+        imagemURL,
+        setImagemURL,
 
         objeto,
         setObjeto,

@@ -5,6 +5,7 @@ export async function PUT(req : Request) {
     const {
         id, 
         nome,
+        imagem_url,
         objeto,
         nivel,
         atributos,
@@ -26,6 +27,7 @@ export async function PUT(req : Request) {
             where: {id},
             data: {
                 nome,
+                imagem_url,
                 objeto,
                 nivel,
                 atributos,

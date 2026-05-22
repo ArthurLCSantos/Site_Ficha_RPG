@@ -25,6 +25,9 @@ export default function CharacterForm({initialData, characterId, canEdit} : Char
         especializacao,
         setEspecializacao,
 
+        imagemURL,
+        setImagemURL,
+
         nivel,
         setNivel,
 
@@ -47,7 +50,7 @@ export default function CharacterForm({initialData, characterId, canEdit} : Char
   return <div className="bg-zinc-100 flex flex-col items-center w-full lg:w-3/4 p-5 lg:p-20 gap-5">
     {/* Informações */}
     <div className="w-full grid grid-cols-2 gap-5">
-      <ImageInput></ImageInput> 
+      <ImageInput value={imagemURL} onChange={(data:string)=>setImagemURL(data)} folder="RPG_FICHA/Personagem" /> 
 
       <InputText texto={"Nome"}           value={nome}           onChange={(data:string)=>setNome(data)}          />
       <InputText texto={"Origem"}         value={origem}         onChange={(data:string)=>setOrigem(data)}        />

@@ -21,6 +21,9 @@ export default function PersonarmaForm({initialData, personarmaId, canEdit} : Pe
 
         nome,
         setNome,
+
+        imagemURL,
+        setImagemURL,
     
         objeto,
         setObjeto,
@@ -43,7 +46,7 @@ export default function PersonarmaForm({initialData, personarmaId, canEdit} : Pe
     return <div className="bg-zinc-100 flex flex-col items-center w-full lg:w-3/4 p-10 gap-5 lg:gap-20">
         {/* Informações */}
         <div className="w-full grid grid-cols-2 gap-5">
-          <ImageInput></ImageInput> 
+          <ImageInput value={imagemURL} onChange={(data:string)=>setImagemURL(data)} folder="RPG_FICHA/Personarma" /> 
 
           <InputText texto={"Nome"}           value={nome}           onChange={(data:string)=>setNome(data)}          />
           <InputText texto={"Objeto"}         value={objeto}         onChange={(data:string)=>setObjeto(data)}        />
