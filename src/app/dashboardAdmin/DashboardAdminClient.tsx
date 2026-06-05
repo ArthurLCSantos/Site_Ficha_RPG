@@ -25,6 +25,7 @@ export default function DashboardAdminClient({adminId}:{adminId:string}) {
                             columns={[
                                 {key:"nome",label:"Nome"},
                                 {key:"origem",label:"Origem"},
+                                {key:"especializacao", label:"Especialização"},
                                 {key:"nivel",label:"Nivel"}
                             ]}
                             lista={usuario.personagens}

@@ -7,6 +7,12 @@ export type Atributo = {
   valor: number
 }
 
+export type HabilidadeData = {
+  nome: string
+
+  descricao: string
+}
+
 export type PersonagemData = {
 
   id: string
@@ -21,7 +27,7 @@ export type PersonagemData = {
 
   atributos: Atributo[]
 
-  habilidades: string
+  habilidades: HabilidadeData[]
 
   pericias: SkillsState
 

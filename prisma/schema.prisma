@@ -28,11 +28,11 @@ model Personagem {
   nivel          Int
   atributos      Json
   pericias       Json
+  usuarioId      String
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
-  habilidades    String   @default("")
+  habilidades    Json     @default("[]")
   imagem_url     String?
-  usuarioId      String
   usuario        Usuario  @relation(fields: [usuarioId], references: [id], onDelete: Cascade)
 }
 
@@ -42,9 +42,9 @@ model Personarma {
   objeto      String
   nivel       Int
   atributos   Json
-  habilidades String
-  imagem_url  String?
+  habilidades Json    @default("[]")
   usuarioId   String
+  imagem_url  String?
   usuario     Usuario @relation(fields: [usuarioId], references: [id], onDelete: Cascade)
 }
 

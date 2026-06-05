@@ -4,7 +4,7 @@ import { useState } from "react"
 import { useRouter } from "next/navigation"
 
 import { allSkills } from "../data/skills"
-import { PersonagemData } from "@/src/types/personagem"
+import { HabilidadeData, PersonagemData } from "@/src/types/personagem"
 import { SkillsState } from "@/src/types/skill"
 
 type useCharacterFormProps = {
@@ -31,8 +31,6 @@ export function useCharacterForm({initialData,characterId}: useCharacterFormProp
     {nome:"carisma" ,valor:1},
     ])
 
-    const [habilidades, setHabilidades] = useState(initialData?.habilidades || "")
-
     function updateAtributo(index:number, value:string) {
         setAtributos(( prev ) =>
             prev.map(( item, i ) =>
@@ -40,6 +38,23 @@ export function useCharacterForm({initialData,characterId}: useCharacterFormProp
                 ? { ...item, valor:Number(value) }
                 : item
             )
+        )
+    }
+
+    const [habilidades, setHabilidades] = useState(initialData?.habilidades || [])
+
+    function addHabilidade(habilidade : HabilidadeData) {
+        setHabilidades((prev)=> 
+            ([
+                ...prev,
+                habilidade
+            ])
+        )
+    }
+
+    function removeHabilidade(habilidade : HabilidadeData) {
+        setHabilidades((prev) => 
+            prev.filter((e) => e !== habilidade)
         )
     }
 
@@ -100,7 +115,8 @@ export function useCharacterForm({initialData,characterId}: useCharacterFormProp
                 imagem_url:imagemURL,
                 nivel,
                 atributos,
-                pericias: skillsState
+                pericias: skillsState,
+                habilidades
             } :
             {
                 nome,
@@ -109,7 +125,8 @@ export function useCharacterForm({initialData,characterId}: useCharacterFormProp
                 imagem_url:imagemURL,
                 nivel,
                 atributos,
-                pericias: skillsState
+                pericias: skillsState,
+                habilidades
             }
 
         await fetch(url, {
@@ -141,7 +158,8 @@ export function useCharacterForm({initialData,characterId}: useCharacterFormProp
         updateAtributo,
 
         habilidades,
-        setHabilidades,
+        addHabilidade,
+        removeHabilidade,
 
         skillsState,
         updateSkillAttribute,

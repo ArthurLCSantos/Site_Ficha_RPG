@@ -2,11 +2,12 @@
 import RectangleInputNumber from "../../components/inputs/RectangularInputNumber";
 import InputText from "../../components/inputs/InputText";
 import CircularInputNumber from "../../components/inputs/CircularInputNumber";
+import MyTable from "../../components/MyTable";
 import ImageInput from "../../components/inputs/ImageInput";
 import Button from "../../components/Button"
 
 import { usePersonarma } from "../hooks/usePersonarma";
-import { PersonarmaData } from "@/src/types/personarma";
+import { HabilidadeData, PersonarmaData } from "@/src/types/personarma";
 
 type PersonarmaFormProps = {
   initialData?: PersonarmaData,
@@ -35,9 +36,11 @@ export default function PersonarmaForm({initialData, personarmaId, canEdit} : Pe
         updateAtributo,
 
         habilidades,
-        setHabilidades,
+        addHabilidade,
+        removeHabilidade,
 
         isEditing,
+        editado,
 
         deletePersonarma,
         savePersonarma
@@ -70,18 +73,34 @@ export default function PersonarmaForm({initialData, personarmaId, canEdit} : Pe
         </div>
 
         {/* Habilidades de Anima */}
+        {/*  
         <textarea 
         onChange={(e)=>setHabilidades(e.target.value)} 
         value={habilidades} 
         className="w-full border-4 border-zinc-400 p-5 outline-none"
         placeholder="estou com preguiça de fazer tabela, então escreve assim 'nome/dano/dado/nivel'"></textarea>
+        */}
+
+        <p className="text-center text-4xl lg:text-7xl text-black">Habilidades de Anima</p>
+        
+        <MyTable<HabilidadeData>
+        columns={[
+          {key:"nome",label:"Nome"},
+          {key:"dano",label:"Dano"},
+          {key:"dado",label:"Dado"},
+          {key:"nivel",label:"Nível"},
+        ]}
+        lista={habilidades}
+        onCreate={(data:HabilidadeData)=>addHabilidade(data)}
+        onErase={(data:HabilidadeData)=>removeHabilidade(data)}
+        />
 
         {erro && <h1 className="text-red-500 bg-black/50 rounded-full p-2">{erro}</h1>}
-        
+
         { canEdit &&
         <div className="flex gap-5">
-          <Button className="bg-zinc-300 p-3 rounded-2xl transition-colors hover:bg-zinc-400" onClick={savePersonarma}>{isEditing ? "Salvar" : "Criar"}</Button>
-          <Button className="bg-red-400 text-black p-3 rounded-2xl transition-colors hover:bg-red-800" onClick={deletePersonarma}>{isEditing ? "Apagar" : "Voltar"}</Button>
+          <Button className="bg-zinc-300 p-3 rounded-2xl transition-colors hover:bg-zinc-400" onClick={savePersonarma}>{  isEditing ? (editado ? "Salvar" : "Voltar") : "Criar"}</Button>
+          <Button className="bg-red-400 text-black p-3 rounded-2xl transition-colors hover:bg-red-800" onClick={deletePersonarma}>{isEditing ? "Apagar" : "Descartar"}</Button>
         </div>}
       </div>
 }

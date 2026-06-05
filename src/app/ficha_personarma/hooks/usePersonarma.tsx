@@ -1,8 +1,8 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation";
-import { PersonarmaData } from "@/src/types/personarma";
+import { HabilidadeData, PersonarmaData } from "@/src/types/personarma";
 
 type UsePersonarmaProps = {
   initialData?: PersonarmaData,
@@ -24,7 +24,36 @@ export function usePersonarma({initialData, personarmaId} : UsePersonarmaProps) 
         {nome:"critico",valor:0},
     ])
 
-    const [habilidades, setHabilidades] = useState(initialData?.habilidades || "")
+    const [habilidades, setHabilidades] = useState(initialData?.habilidades || [])
+    
+        function addHabilidade(habilidade : HabilidadeData) {
+            setHabilidades((prev)=> 
+                ([
+                    ...prev,
+                    habilidade
+                ])
+            )
+        }
+    
+        function removeHabilidade(habilidade : HabilidadeData) {
+            setHabilidades((prev) => 
+                prev.filter((e) => e !== habilidade)
+            )
+        }
+
+    const [editado,setEditado] = useState(false) 
+      useEffect(()=>{
+        if (!personarmaId) return
+        
+        if (
+            nome!==initialData?.nome || 
+            imagemURL!==initialData.imagem_url || 
+            objeto!==initialData.objeto || 
+            atributos!==initialData.atributos || 
+            habilidades!==initialData.habilidades ) 
+            {setEditado(true)}
+      },
+      [nome,objeto,nivel,atributos,habilidades,imagemURL])
 
     function updateAtributo(index:number, value: string) {
         setAtributos(( prev ) =>
@@ -37,25 +66,28 @@ export function usePersonarma({initialData, personarmaId} : UsePersonarmaProps) 
     }
 
     async function deletePersonarma() {
-      const res = await fetch("/api/personarma/delete", {
-        method: "DELETE",
-        headers: {"Content-Type":"application/json"},
-        body: JSON.stringify({id:personarmaId})
-      })
+        if (!isEditing) {router.back();return}
+        const res = await fetch("/api/personarma/delete", {
+            method: "DELETE",
+            headers: {"Content-Type":"application/json"},
+            body: JSON.stringify({id:personarmaId})
+        })
 
-      const data = await res.json()
+        const data = await res.json()
 
-      if (!res.ok) {
-        setErro(data.error||"Erro no servidor")
-        return
-      }
+        if (!res.ok) {
+            setErro(data.error||"Erro no servidor")
+            return
+        }
 
-      router.back()
+        router.back()
     }
 
     async function savePersonarma() {
 
-        const url =  isEditing ? `/api/personarma/update` : "/api/personarma/create"
+        if (isEditing && !editado) {router.back();return}
+
+        const url =  isEditing ? `/api/personarma/update` : `/api/personarma/create`
 
         const method = isEditing ? "PUT" : "POST"
 
@@ -112,9 +144,12 @@ export function usePersonarma({initialData, personarmaId} : UsePersonarmaProps) 
         updateAtributo,
 
         habilidades,
-        setHabilidades,
+        addHabilidade,
+        removeHabilidade,
 
         isEditing,
+
+        editado,
 
         deletePersonarma,
         savePersonarma

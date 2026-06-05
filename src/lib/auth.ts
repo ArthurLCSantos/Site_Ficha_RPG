@@ -55,7 +55,6 @@ export const {
                     email: user.email,
                     role: user.role,
                 }
-
             }
         })
     ],

@@ -3,10 +3,11 @@ import RectangleInputNumber from "../../components/inputs/RectangularInputNumber
 import InputText from "../../components/inputs/InputText";
 import CircularInputNumber from "../../components/inputs/CircularInputNumber";
 import ImageInput from "../../components/inputs/ImageInput";
+import MyTable from "../../components/MyTable";
 import SkillTable from "../components/tables/SkillTable";
 import Button from "../../components/Button"
 
-import { Atributo, PersonagemData } from "@/src/types/personagem";
+import { Atributo, HabilidadeData, PersonagemData } from "@/src/types/personagem";
 import { skills1, skills2, skills3 } from "../data/skills";
 
 import { useCharacterForm } from "../hooks/useCharacterForm";
@@ -35,7 +36,8 @@ export default function CharacterForm({initialData, characterId, canEdit} : Char
         updateAtributo,
 
         habilidades,
-        setHabilidades,
+        addHabilidade,
+        removeHabilidade,
 
         skillsState,
         updateSkillAttribute,
@@ -96,12 +98,25 @@ export default function CharacterForm({initialData, characterId, canEdit} : Char
     </div>
 
     {/* Habilidades de Anima */}
+    {/*
       <textarea
       onChange={(e)=>setHabilidades(e.target.value)}
       value={habilidades}
       className="w-full border-4 border-zinc-400 p-5 outline-none"
       placeholder="estou com preguiça de fazer tabela, então escreve assim 'nome/dano/dado/nivel'"></textarea>
-      
+    */}
+
+    <p className="text-center text-4xl lg:text-7xl text-black">Habilidades de Especialização</p>
+    <MyTable<HabilidadeData>
+      columns={[
+        {key:"nome",label:"Nome"},
+        {key:"descricao", label:"Descrição"}
+      ]}
+      lista={habilidades}
+      onCreate={(data: HabilidadeData)=>addHabilidade(data)}
+      onErase={(data: HabilidadeData) => removeHabilidade(data)}
+    />
+
     {canEdit && 
     <div className="flex gap-5">
       <Button className="bg-zinc-300 p-3 rounded-2xl transition-colors hover:bg-zinc-400" onClick={salvarPersonagem}>{isEditing ? "Salvar" : "Criar"}</Button>
