@@ -1,7 +1,7 @@
 import CharacterForm from "../components/CharacterForm";
 import { prisma } from "@/src/lib/prisma"
 import { auth } from "@/src/lib/auth"
-import { Atributo, PersonagemData } from "@/src/types/personagem";
+import { Atributo, HabilidadeData, PersonagemData } from "@/src/types/personagem";
 import { SkillsState } from "@/src/types/skill";
 
 export default async function EditFicha({params} : {params:{id:string}}) {
@@ -18,6 +18,7 @@ export default async function EditFicha({params} : {params:{id:string}}) {
 
   const personagem: PersonagemData = {
     ...personagemDB,
+    habilidades: personagemDB?.habilidades as HabilidadeData[],
     atributos: personagemDB?.atributos as Atributo[],
     pericias: personagemDB?.pericias as SkillsState,
     imagem_url: personagemDB.imagem_url ?? undefined

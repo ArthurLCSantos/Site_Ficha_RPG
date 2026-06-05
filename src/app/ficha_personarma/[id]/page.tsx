@@ -1,7 +1,7 @@
 import PersonarmaForm from "../components/PersonarmaForm"
 import { prisma } from "@/src/lib/prisma"
 import { auth } from "@/src/lib/auth"
-import { PersonarmaData } from "@/src/types/personarma"
+import { HabilidadeData, PersonarmaData } from "@/src/types/personarma"
 import { Atributo } from "@/src/types/personagem"
 
 export default async function EditPersonarma({params}:{params:{id:string}}) {
@@ -21,6 +21,7 @@ export default async function EditPersonarma({params}:{params:{id:string}}) {
     const personarma: PersonarmaData = {
         ...personarmaDB,
         atributos: personarmaDB.atributos as Atributo[],
+        habilidades: personarmaDB.habilidades as HabilidadeData[],
         imagem_url: personarmaDB.imagem_url ?? undefined
     }
 
