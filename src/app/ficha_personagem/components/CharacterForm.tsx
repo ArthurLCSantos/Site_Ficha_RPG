@@ -44,6 +44,7 @@ export default function CharacterForm({initialData, characterId, canEdit} : Char
         updateSkillTraining,
 
         isEditing,
+        editado,
 
         deletePersonagem,
         salvarPersonagem
@@ -117,10 +118,10 @@ export default function CharacterForm({initialData, characterId, canEdit} : Char
       onErase={(data: HabilidadeData) => removeHabilidade(data)}
     />
 
-    {canEdit && 
+    { canEdit &&
     <div className="flex gap-5">
-      <Button className="bg-zinc-300 p-3 rounded-2xl transition-colors hover:bg-zinc-400" onClick={salvarPersonagem}>{isEditing ? "Salvar" : "Criar"}</Button>
-      <Button className="bg-red-400 text-black p-3 rounded-2xl transition-colors hover:bg-red-800" onClick={deletePersonagem}>{isEditing ? "Apagar" : "Voltar"}</Button>
+      <Button className="bg-zinc-300 p-3 rounded-2xl transition-colors hover:bg-zinc-400" onClick={salvarPersonagem}>{  isEditing ? (editado ? "Salvar" : "Voltar") : "Criar"}</Button>
+      <Button className="bg-red-400 text-black p-3 rounded-2xl transition-colors hover:bg-red-800" onClick={deletePersonagem}>{isEditing ? "Apagar" : "Descartar"}</Button>
     </div>}
   </div>
 }

@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 
 import { allSkills } from "../data/skills"
@@ -58,6 +58,22 @@ export function useCharacterForm({initialData,characterId}: useCharacterFormProp
         )
     }
 
+    const [editado,setEditado] = useState(false) 
+          useEffect(()=>{
+            if (!characterId) return
+            
+            if (
+                nome!==initialData?.nome || 
+                origem!==initialData.origem ||
+                especializacao!==initialData.especializacao ||
+                nivel!==initialData.nivel ||
+                imagemURL!==initialData.imagem_url ||  
+                atributos!==initialData.atributos || 
+                habilidades!==initialData.habilidades ) 
+                {setEditado(true)}
+          },
+          [nome,origem,especializacao,nivel,imagemURL,atributos,habilidades])
+
     const initialSkillsState = allSkills.reduce<SkillsState>((acc, skill) => {
         acc[skill.nome] = {
         atributo: skill.select ? skill.select[0] : skill.atributo ?? "",
@@ -92,6 +108,7 @@ export function useCharacterForm({initialData,characterId}: useCharacterFormProp
     }
 
     async function deletePersonagem() {
+        if (!isEditing) {router.back();return}
         const res = await fetch("/api/personagem/delete", {
         method: "DELETE",
         headers: {"Content-Type":"application/json"},
@@ -102,6 +119,8 @@ export function useCharacterForm({initialData,characterId}: useCharacterFormProp
     }
 
     async function salvarPersonagem() {
+
+        if (isEditing && !editado) {router.back();return}
 
         const url =  isEditing ? `/api/personagem/update` : "/api/personagem/create"
 
@@ -166,6 +185,7 @@ export function useCharacterForm({initialData,characterId}: useCharacterFormProp
         updateSkillTraining,
 
         isEditing,
+        editado,
 
         deletePersonagem,
         salvarPersonagem
