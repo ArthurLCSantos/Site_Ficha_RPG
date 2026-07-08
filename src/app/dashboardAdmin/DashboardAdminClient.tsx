@@ -25,13 +25,12 @@ export default function DashboardAdminClient({adminId}:{adminId:string}) {
                             columns={[
                                 {key:"nome",label:"Nome"},
                                 {key:"origem",label:"Origem"},
-                                {key:"especializacao", label:"Especialização"},
-                                {key:"nivel",label:"Nivel"}
+                                {key:"especializacao", label:"Especialização"}
                             ]}
                             lista={usuario.personagens}
-                            onCreate={adminId===usuario.id ? ()=>{router.push(`/ficha_personagem`)} : undefined}
-                            elementOnClick={(id:string)=>{router.push(`/ficha_personagem/${id}`)}}
-                        ></Dashboard>
+                            onCreate={adminId===usuario.id ? ()=>{console.log("INDO PARA CRIAÇÃO DE FICHA_PERSONAGEM");router.push(`/ficha_personagem`)} : undefined}
+                            elementOnClick={(id:string)=>{console.log("INDO PARA EDIÇÃO DE FICHA_PERSONAGEM");router.push(`/ficha_personagem/${id}`)}}
+                        />
         
                         <Dashboard<PersonarmaData>
                             titulo={"Personarmas"}
@@ -43,7 +42,7 @@ export default function DashboardAdminClient({adminId}:{adminId:string}) {
                             lista={usuario.personarmas}
                             onCreate={adminId===usuario.id ? ()=>{router.push(`/ficha_personarma`)} : undefined}
                             elementOnClick={(id:string)=>{router.push(`/ficha_personarma/${id}`)}}
-                        ></Dashboard>
+                        />
                     </div>
                 </div>
             ))}

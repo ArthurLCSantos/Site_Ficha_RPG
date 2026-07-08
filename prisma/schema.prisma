@@ -22,17 +22,26 @@ model Usuario {
 
 model Personagem {
   id             String   @id @default(cuid())
-  nome           String
-  origem         String
-  especializacao String
-  nivel          Int
+  nome           String   @default("")
+  origem         String   @default("")
+  especializacao String   @default("")
+  experiencia    Int      @default(0)
+  ca             Int      @default(1)
+  vida           Json     @default("{\"atual\":10,\"maximo\":10}")
+  estamina       Json     @default("{\"atual\":10,\"maximo\":10}")
   atributos      Json
   pericias       Json
+  habilidades    Json     @default("[]")
+
+  imagem_url     String?  @default("")
+  historia       String   @default("")
+  ideais         String   @default("")
+  defeitos       String   @default("")
+  inventario     Json     @default("[]")
+
   usuarioId      String
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
-  habilidades    Json     @default("[]")
-  imagem_url     String?
   usuario        Usuario  @relation(fields: [usuarioId], references: [id], onDelete: Cascade)
 }
 

@@ -8,33 +8,33 @@ export function useDashboardUsuario() {
     const [personarmas, setPersonarmas ] = useState([])
 
     useEffect(()=>{
-        async function carregarPersonagem() {
-            const res = await fetch("/api/personagem")
-            const data = await res.json()
 
-            if (!res.ok) {
-                setError(data.erro || "Erro no servidor")
-                return
+        async function carregarDados() {
+            try {
+                const [personagemRes, personarmaRes] = await Promise.all([fetch("/api/personagem"),fetch("/api/personarma")])
+
+                if (!personagemRes.ok) {
+                    setError("Erro ao carregar personagens")
+                }
+                if (!personarmaRes.ok) {
+                    setError("Erro ao carregar personarma")
+                }
+
+                const personagemData = await personagemRes.json()
+                const personarmaData = await personarmaRes.json()
+
+                setPersonagens(personagemData)
+                setPersonarmas(personarmaData)
+            } catch (err) {
+                console.error(err)
+
+                setError("Erro ao conectar com o servidor")
+            } finally {
+                setLoading(false)
             }
-
-            setPersonagens(data)
         }
 
-        async function carregarPersonarma() {
-            const res = await fetch("/api/personarma")
-            const data = await res.json()
-            
-            if (!res.ok) {
-                setError(data.erro || "Erro no servidor")
-                return
-            }
-
-            setPersonarmas(data)
-        }
-
-        carregarPersonagem()
-        carregarPersonarma()
-        setLoading(false)
+        carregarDados()
     },[])
 
     return {

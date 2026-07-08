@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation"
 import { allSkills } from "../data/skills"
 import { HabilidadeData, PersonagemData } from "@/src/types/personagem"
 import { SkillsState } from "@/src/types/skill"
+import { ItemData } from "@/src/types/item"
 
 type useCharacterFormProps = {
     initialData?: PersonagemData,
@@ -19,8 +20,29 @@ export function useCharacterForm({initialData,characterId}: useCharacterFormProp
     const [origem,setOrigem] = useState(initialData?.origem || "")
     const [especializacao,setEspecializacao] = useState(initialData?.especializacao || "")
     const [imagemURL, setImagemURL] = useState(initialData?.imagem_url || "")
+    const [historia,setHistoria] = useState(initialData?.historia || "")
+    const [ideais,setIdeais] = useState(initialData?.ideais || "")
+    const [defeitos,setDefeitos] = useState(initialData?.defeitos || "")
 
-    const [nivel, setNivel] = useState(initialData?.nivel || 0)
+    const [experiencia, setExperiencia] = useState(initialData?.experiencia || 0)
+
+    const [ca, setCA] = useState(initialData?.ca || 1)
+    const [vida, setVida] = useState(initialData?.vida || {atual:10,maximo:10})
+    const [estamina, setEstamina] = useState(initialData?.estamina || {atual:10,maximo:10})
+
+    function updateVida({campo, data}:{campo:string, data:number}) {
+        setVida(prev=> ({
+            ...prev,
+            [campo]: data
+        }))
+    }
+
+    function updateEstamina({campo, data}:{campo:string, data:number}) {
+        setEstamina(prev=> ({
+            ...prev,
+            [campo]: data
+        }))
+    }
 
     const [atributos, setAtributos] = useState(initialData?.atributos || [
     {nome:"força" ,valor:1},
@@ -58,21 +80,22 @@ export function useCharacterForm({initialData,characterId}: useCharacterFormProp
         )
     }
 
-    const [editado,setEditado] = useState(false) 
-          useEffect(()=>{
-            if (!characterId) return
-            
-            if (
-                nome!==initialData?.nome || 
-                origem!==initialData.origem ||
-                especializacao!==initialData.especializacao ||
-                nivel!==initialData.nivel ||
-                imagemURL!==initialData.imagem_url ||  
-                atributos!==initialData.atributos || 
-                habilidades!==initialData.habilidades ) 
-                {setEditado(true)}
-          },
-          [nome,origem,especializacao,nivel,imagemURL,atributos,habilidades])
+    const [inventario, setInventario] = useState(initialData?.inventario || [])
+
+    function addItem(item : ItemData) {
+        setInventario((prev)=> 
+            ([
+                ...prev,
+                item
+            ])
+        )
+    }
+
+    function removeItem(item : ItemData) {
+        setInventario((prev) => 
+            prev.filter((e) => e !== item)
+        )
+    }
 
     const initialSkillsState = allSkills.reduce<SkillsState>((acc, skill) => {
         acc[skill.nome] = {
@@ -107,6 +130,32 @@ export function useCharacterForm({initialData,characterId}: useCharacterFormProp
         }))
     }
 
+    const [editado,setEditado] = useState(false) 
+    useEffect(()=>{
+    if (!characterId) return
+    
+    const mudou = (
+        nome!==initialData?.nome                                              ||
+        origem!==initialData.origem                                           ||
+        especializacao!==initialData.especializacao                           ||
+        experiencia!==initialData.experiencia                                 ||
+        imagemURL!==initialData.imagem_url                                    ||
+        historia !==initialData.historia                                      ||
+        ideais   !== initialData.ideais                                       ||
+        defeitos !== initialData.defeitos                                     ||
+        JSON.stringify(ca)   !== JSON.stringify(initialData.ca)               ||
+        JSON.stringify(vida) !== JSON.stringify(initialData.vida)             ||
+        JSON.stringify(estamina) !== JSON.stringify(initialData.estamina)     ||
+        JSON.stringify(atributos)  !==JSON.stringify(initialData.atributos)   ||
+        JSON.stringify(habilidades)!==JSON.stringify(initialData.habilidades) ||
+        JSON.stringify(skillsState)!==JSON.stringify(initialData.pericias)    ||
+        JSON.stringify(inventario)!==JSON.stringify(initialData.inventario)
+    )
+    setEditado(mudou)
+    },
+    [nome,origem,especializacao,experiencia,ca,vida,estamina,imagemURL,atributos,habilidades,skillsState,historia,ideais,defeitos,inventario])
+
+
     async function deletePersonagem() {
         if (!isEditing) {router.back();return}
         const res = await fetch("/api/personagem/delete", {
@@ -131,21 +180,37 @@ export function useCharacterForm({initialData,characterId}: useCharacterFormProp
                 nome,
                 origem,
                 especializacao,
-                imagem_url:imagemURL,
-                nivel,
+                experiencia,
+                ca,
+                vida,
+                estamina,
                 atributos,
                 pericias: skillsState,
-                habilidades
+                habilidades,
+                
+                imagem_url:imagemURL,
+                historia,
+                ideais,
+                defeitos,
+                inventario
             } :
             {
                 nome,
                 origem,
                 especializacao,
-                imagem_url:imagemURL,
-                nivel,
+                experiencia,
+                ca,
+                vida,
+                estamina,
                 atributos,
                 pericias: skillsState,
-                habilidades
+                habilidades,
+                
+                imagem_url:imagemURL,
+                historia,
+                ideais,
+                defeitos,
+                inventario
             }
 
         await fetch(url, {
@@ -167,11 +232,17 @@ export function useCharacterForm({initialData,characterId}: useCharacterFormProp
         especializacao,
         setEspecializacao,
 
-        imagemURL,
-        setImagemURL,
+        experiencia,
+        setExperiencia,
 
-        nivel,
-        setNivel,
+        ca,
+        setCA,
+
+        vida,
+        updateVida,
+
+        estamina,
+        updateEstamina,
 
         atributos,
         updateAtributo,
@@ -183,6 +254,22 @@ export function useCharacterForm({initialData,characterId}: useCharacterFormProp
         skillsState,
         updateSkillAttribute,
         updateSkillTraining,
+
+        imagemURL,
+        setImagemURL,
+
+        historia,
+        setHistoria,
+
+        ideais,
+        setIdeais,
+
+        defeitos,
+        setDefeitos,
+
+        inventario,
+        addItem,
+        removeItem,
 
         isEditing,
         editado,

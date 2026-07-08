@@ -8,18 +8,22 @@ export async function GET() {
 
     if (session?.user?.role !== "ADMIN") return Response.json({error:"Não autorizado"},{status:403})
 
-    const usuarios = await prisma.usuario.findMany({
-        orderBy: {
-            role: "desc",
-        },
-        select: {
-            id:true,
-            nome:true,
-            email:true,
-            personagens:true,
-            personarmas:true
-        }
-    })
+    try {
+        const usuarios = await prisma.usuario.findMany({
+            orderBy: {
+                role: "desc",
+            },
+            select: {
+                id:true,
+                nome:true,
+                email:true,
+                personagens:true,
+                personarmas:true
+            }
+        })
 
-    return Response.json(usuarios)
+        return Response.json(usuarios)
+    } catch (err) {
+        return Response.json({error:err},{status:500})
+    }
 }

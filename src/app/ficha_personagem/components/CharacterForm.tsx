@@ -1,127 +1,49 @@
 "use client"
-import RectangleInputNumber from "../../components/inputs/RectangularInputNumber";
-import InputText from "../../components/inputs/InputText";
-import CircularInputNumber from "../../components/inputs/CircularInputNumber";
-import ImageInput from "../../components/inputs/ImageInput";
-import MyTable from "../../components/MyTable";
-import SkillTable from "../components/tables/SkillTable";
 import Button from "../../components/Button"
+import Header from "@/src/app/components/Header"
 
-import { Atributo, HabilidadeData, PersonagemData } from "@/src/types/personagem";
-import { skills1, skills2, skills3 } from "../data/skills";
+import { PersonagemData } from "@/src/types/personagem";
 
 import { useCharacterForm } from "../hooks/useCharacterForm";
+import { useState } from "react";
 
-type CharacterFormProps = {initialData?:PersonagemData, characterId?: string, canEdit?: boolean}
+import FichaTecnicaForm from "./FichaTecnicaForm";
+import FichaPessoalForm from "./FichaPessoalForm";
+import { CharacterContext } from "../characterContext";
 
-export default function CharacterForm({initialData, characterId, canEdit} : CharacterFormProps) {
+type CharacterFormProps = {initialData?:PersonagemData, characterId?: string, role?: string, isOwner: boolean}
 
-    const {
-        nome,
-        setNome,
+export default function CharacterForm({initialData, characterId, role, isOwner} : CharacterFormProps) {
+  const character = useCharacterForm({initialData, characterId})
 
-        origem,
-        setOrigem,
+  const {
+      isEditing,
+      editado,
 
-        especializacao,
-        setEspecializacao,
+      deletePersonagem,
+      salvarPersonagem
+  } = character
 
-        imagemURL,
-        setImagemURL,
+  const [modo,setModo] = useState("ficha_tecnica")
 
-        nivel,
-        setNivel,
+  return (
+    <div className="bg-zinc-100 flex flex-col items-center w-full lg:w-3/4 p-5 lg:p-20 gap-5">
+      <Header
+        opcao_atual={modo}
+        opcoes={[{key:"ficha_pessoal",label:"Ficha Pessoal"},{key:"ficha_tecnica",label:"Ficha Técnica"}]}
+        onClick={(data:string)=>setModo(data)}
+        classContainer="flex w-full bg-zinc-200"
+        classChildren="w-full text-center text-3xl p-5 hover:bg-zinc-400 cursor-pointer"
+      />
 
-        atributos,
-        updateAtributo,
+      <CharacterContext.Provider value={character}>
+        {modo === "ficha_tecnica" ? <FichaTecnicaForm role={role} isOwner={isOwner} /> : <FichaPessoalForm role={role} isOwner={isOwner} />}
+      </CharacterContext.Provider>
 
-        habilidades,
-        addHabilidade,
-        removeHabilidade,
-
-        skillsState,
-        updateSkillAttribute,
-        updateSkillTraining,
-
-        isEditing,
-        editado,
-
-        deletePersonagem,
-        salvarPersonagem
-    } = useCharacterForm({initialData, characterId})
-
-  return <div className="bg-zinc-100 flex flex-col items-center w-full lg:w-3/4 p-5 lg:p-20 gap-5">
-    {/* Informações */}
-    <div className="w-full grid grid-cols-1 lg:grid-cols-2 gap-5">
-      <ImageInput value={imagemURL} onChange={(data:string)=>setImagemURL(data)} folder="RPG_FICHA/Personagem" /> 
-
-      <InputText texto={"Nome"}           value={nome}           onChange={(data:string)=>setNome(data)}          />
-      <InputText texto={"Origem"}         value={origem}         onChange={(data:string)=>setOrigem(data)}        />
-      <InputText texto={"Especialização"} value={especializacao} onChange={(data:string)=>setEspecializacao(data)}/>
-    </div>
-
-    {/* Nível */}
-    <CircularInputNumber texto={"Nível"} value={String(nivel)} onChange={(data:string)=>setNivel(Number(data))} ></CircularInputNumber>
-
-    {/* Atributos */}
-    <div>
-      <p className="text-center text-4xl lg:text-8xl text-black">Atributos</p>
-      <div className="grid grid-cols-3 lg:gap-x-20 gap-y-5 w-full">
-        {atributos.map((atributo : Atributo, index:number) => 
-        <RectangleInputNumber
-          key={index}
-          atributo={atributo}
-          onChange={(value:string) => updateAtributo(index,value)}
-          ></RectangleInputNumber>)}
+      <div className="flex gap-5">
+        <Button className="bg-zinc-300 p-3 rounded-2xl transition-colors hover:bg-zinc-400" onClick={salvarPersonagem}>{  isEditing ? (editado ? "Salvar" : "Voltar") : "Criar"}</Button>
+        {isOwner && <Button className="bg-red-400 text-black p-3 rounded-2xl transition-colors hover:bg-red-800" onClick={deletePersonagem}>{ isEditing ? "Apagar" : "Descartar"}</Button>}
       </div>
     </div>
-
-    {/* Perícias */}
-    <div className="w-full">
-      <p className="text-center text-4xl lg:text-8xl text-black">Perícias</p>
-      <div className=" xl:flex justify-center items-start gap-10 px-5">
-        <SkillTable 
-        skills={skills1}
-        skillsState={skillsState}
-        updateSkillAttribute={updateSkillAttribute}
-        updateSkillTraining={updateSkillTraining}></SkillTable>
-        <SkillTable 
-        skills={skills2}
-        skillsState={skillsState}
-        updateSkillAttribute={updateSkillAttribute}
-        updateSkillTraining={updateSkillTraining}></SkillTable>
-        <SkillTable 
-        skills={skills3}
-        skillsState={skillsState}
-        updateSkillAttribute={updateSkillAttribute}
-        updateSkillTraining={updateSkillTraining}></SkillTable>
-      </div>
-    </div>
-
-    {/* Habilidades de Anima */}
-    {/*
-      <textarea
-      onChange={(e)=>setHabilidades(e.target.value)}
-      value={habilidades}
-      className="w-full border-4 border-zinc-400 p-5 outline-none"
-      placeholder="estou com preguiça de fazer tabela, então escreve assim 'nome/dano/dado/nivel'"></textarea>
-    */}
-
-    <p className="text-center text-4xl lg:text-7xl text-black">Habilidades de Especialização</p>
-    <MyTable<HabilidadeData>
-      columns={[
-        {key:"nome",label:"Nome"},
-        {key:"descricao", label:"Descrição"}
-      ]}
-      lista={habilidades}
-      onCreate={(data: HabilidadeData)=>addHabilidade(data)}
-      onErase={(data: HabilidadeData) => removeHabilidade(data)}
-    />
-
-    { canEdit &&
-    <div className="flex gap-5">
-      <Button className="bg-zinc-300 p-3 rounded-2xl transition-colors hover:bg-zinc-400" onClick={salvarPersonagem}>{  isEditing ? (editado ? "Salvar" : "Voltar") : "Criar"}</Button>
-      <Button className="bg-red-400 text-black p-3 rounded-2xl transition-colors hover:bg-red-800" onClick={deletePersonagem}>{isEditing ? "Apagar" : "Descartar"}</Button>
-    </div>}
-  </div>
+    )
 }

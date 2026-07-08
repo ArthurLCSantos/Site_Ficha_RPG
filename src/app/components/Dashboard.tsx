@@ -38,7 +38,7 @@ export function Dashboard<T extends {id:string}>({
         <div className="w-full">
 
             <div className="w-full flex justify-between pt-5">
-                {titulo && <h1 className="text-xl">{titulo}</h1>}
+                {titulo && <h1 className="text-2xl">{titulo}</h1>}
                 {onCreate && <Button className="px-2 py-1 text-zinc-100 bg-zinc-900 rounded-full font-bold tracking-widest cursor-pointer" onClick={onCreate}>Criar</Button>}
             </div>
 

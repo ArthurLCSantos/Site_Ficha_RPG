@@ -16,22 +16,37 @@ export async function POST(req : Request) {
         origem, 
         especializacao, 
         imagem_url,
-        nivel, 
+        experiencia,
+        ca,
+        vida,
+        estamina,
         atributos, 
         pericias,
-        habilidades} = await req.json()
-
+        habilidades,
+        historia,
+        ideais,
+        defeitos,
+        inventario} = await req.json()
     const personagem = 
         await prisma.personagem.create({
             data: {
                 nome,
                 origem,
                 especializacao,
-                imagem_url,
-                nivel,
+                experiencia,
+                ca,
+                vida,
+                estamina,
                 atributos,
                 pericias,
                 habilidades,
+
+                imagem_url,
+                historia,
+                ideais,
+                defeitos,
+                inventario,
+
                 usuarioId:session.user.id
             }
         })

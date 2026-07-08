@@ -65,7 +65,8 @@ export default function PersonarmaForm({initialData, personarmaId, canEdit} : Pe
             {atributos.map((atributo, index) => 
             <RectangleInputNumber
               key={index}
-              atributo={atributo}
+              nome={atributo.nome}
+              valor={atributo.valor}
               modificador={false}
               onChange={(value:string) => updateAtributo(index,value)}
               ></RectangleInputNumber>)}

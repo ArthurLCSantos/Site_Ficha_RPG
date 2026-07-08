@@ -6,12 +6,12 @@ type SkillTableProps = {
 
   skillsState: SkillsState
 
-  updateSkillAttribute: (
+  updateSkillAttribute?: (
     skillName: string,
     value: string
   ) => void
 
-  updateSkillTraining: (
+  updateSkillTraining?: (
     skillName: string,
     value: boolean
   ) => void
@@ -30,7 +30,7 @@ export default function SkillTable({ skills, skillsState, updateSkillAttribute, 
               <td className="py-2 pr-3 text-left">{skill.nome}</td>
 
               <td className="py-2 text-left">
-                {skill.select ? (
+                {skill.select && updateSkillAttribute ? (
                   <select
                   value={skillsState[skill.nome].atributo}
                   onChange={(e)=>updateSkillAttribute(skill.nome, e.target.value)}
@@ -48,7 +48,8 @@ export default function SkillTable({ skills, skillsState, updateSkillAttribute, 
                 <input
                 className="size-8"
                 checked={skillsState[skill.nome].treinada}
-                onChange={(e)=>updateSkillTraining(skill.nome, e.target.checked)}
+                onChange={updateSkillTraining ? (e)=>updateSkillTraining(skill.nome, e.target.checked) : undefined}
+                disabled={!updateSkillTraining}
                 type="checkbox" />
               </td>
             </tr>

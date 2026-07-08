@@ -32,7 +32,7 @@ export default function DashboardUsuarioClient() {
                     columns={[
                         {key:"nome",label:"Nome"},
                         {key:"origem",label:"Origem"},
-                        {key:"nivel",label:"Nivel"}
+                        {key:"especializacao",label:"Especialização"}
                     ]}
                     lista={personagens}
                     onCreate={()=>{router.push("/ficha_personagem")}}

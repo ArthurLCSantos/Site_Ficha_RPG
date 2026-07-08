@@ -1,7 +1,7 @@
+import { ItemData } from "./item"
 import { SkillsState } from "./skill"
 
 export type Atributo = {
-
   nome: string
 
   valor: number
@@ -11,6 +11,12 @@ export type HabilidadeData = {
   nome: string
 
   descricao: string
+}
+
+export type StatusData = {
+  atual: number
+  
+  maximo: number
 }
 
 export type PersonagemData = {
@@ -23,7 +29,13 @@ export type PersonagemData = {
 
   especializacao: string
 
-  nivel: number
+  experiencia: number
+
+  ca: number,
+
+  vida: StatusData
+
+  estamina: StatusData
 
   atributos: Atributo[]
 
@@ -31,6 +43,15 @@ export type PersonagemData = {
 
   pericias: SkillsState
 
+
   imagem_url?: string
+
+  historia: string
+
+  ideais: string
+
+  defeitos: string
+
+  inventario: ItemData[]
 }
 

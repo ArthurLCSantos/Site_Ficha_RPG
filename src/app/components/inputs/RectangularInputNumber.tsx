@@ -1,19 +1,21 @@
-import { Atributo } from "@/src/types/personagem"
 import { calculateModifier } from "../../ficha_personagem/utils/modifier"
 
 type RectangleInputNumberProps = {
-  atributo: Atributo,
-  onChange: (value: string) => void,
+  nome: string,
+  valor: number,
+  onChange?: (value: string) => void,
   modificador?: boolean
 }
 
-export default function RectangleInputNumber({ atributo, onChange, modificador=true } : RectangleInputNumberProps) {
+export default function RectangleInputNumber({ nome, valor, onChange, modificador=true } : RectangleInputNumberProps) {
   return (
-    <div className="border-2 border-black">
-      <p className=" font-bold lg:text-xl w-full text-center border-b-2 border-black">{atributo.nome}</p>
-
-      <input className="text-center border-0 w-full  font-black text-4xl outline-none" value={atributo.valor} onChange={(e)=>onChange(e.target.value)} min={0} max={20} maxLength={3} />
-      {modificador && <p className="font-bold text-2xl  text-center">{`${calculateModifier(atributo.valor) > 0 ? "+" : "" }${calculateModifier(atributo.valor)}`}</p>}
+    <div className="w-full h-full flex flex-col">
+      <p className="text-2xl text-center border-b-2 border-black">{nome}</p>
+      <div className="flex-1 flex flex-col items-center justify-center">
+        {onChange ? <input className="text-center text-4xl outline-none" type="number" value={valor} onChange={(e)=>onChange(e.target.value)} min={0} max={20} maxLength={3} /> 
+        : <p className="text-center text-4xl">{valor}</p>}
+        {modificador && <p className="text-2xl">{`${calculateModifier(valor) > 0 ? "+" : "" }${calculateModifier(valor)}`}</p>}
+      </div>
     </div>
   )
 }

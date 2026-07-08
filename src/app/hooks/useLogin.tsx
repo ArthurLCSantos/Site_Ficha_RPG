@@ -1,19 +1,28 @@
 import { useState } from "react"
 import { signIn } from "next-auth/react"
+import { useRouter } from "next/navigation"
 
 export function useLogin() {
+    
+    const router = useRouter()
     const [erro, setErro] = useState("")
     const [email, setEmail] = useState("")
     const [senha, setSenha] = useState("")
 
     async function handleLogin() {
-        await signIn("credentials", {
+        const res = await signIn("credentials", {
         email: email,
         password: senha,
 
-        redirect: true,
-        callbackUrl: "/dashboardAdmin"
+        redirect: false
         })
+
+        if (res?.error) {
+            setErro("Senha ou Email Inválidos.");
+            return;
+        }
+
+        router.push('/dashboardAdmin')
     }
 
     return {

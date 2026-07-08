@@ -6,6 +6,20 @@ export function SkeletonCircularInputNumber() {
   );
 }
 
+type CircularNumberProps = {
+  texto:    string,
+  value:    string,
+}
+
+export function CircularNumber({ texto, value } : CircularNumberProps) {
+  return (
+    <div className="flex flex-col justify-center items-center">
+      <p className="font-bold text-center text-md">{texto}</p>
+      <p className="flex items-center justify-center rounded-full bg-zinc-100 border-black border-2 size-20 font-black text-4xl outline-none">{value}</p>
+    </div>
+  );
+}
+
 type CircularInputNumberProps = {
   texto:    string,
   value:    string,
