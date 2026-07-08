@@ -32,9 +32,8 @@ export function MyImage(value:string) {
       hover:border-zinc-600
       hover:bg-zinc-100
       bg-center
-      size-60
-      lg:size-70
-      xl:size-90
+      size-full
+      aspect-square
       "
     >
 

@@ -46,41 +46,37 @@ export default function PersonarmaForm({initialData, personarmaId, canEdit} : Pe
         savePersonarma
       } = usePersonarma({initialData, personarmaId})
 
-    return <div className="bg-zinc-100 flex flex-col items-center w-full lg:w-3/4 p-10 gap-5 lg:gap-20">
+    return <div className="bg-zinc-100 flex flex-col justify-center items-center w-full lg:w-1/2 p-10 gap-5 lg:gap-20">
         {/* Informações */}
-        <div className="w-full grid grid-cols-2 gap-5">
-          <ImageInput value={imagemURL} onChange={(data:string)=>setImagemURL(data)} folder="RPG_FICHA/Personarma" /> 
 
-          <InputText texto={"Nome"}           value={nome}           onChange={(data:string)=>setNome(data)}          />
-          <InputText texto={"Objeto"}         value={objeto}         onChange={(data:string)=>setObjeto(data)}        />
+        <div className="w-full flex flex-col sm:flex-row justify-center gap-10">
+          <ImageInput value={imagemURL} onChange={(data:string)=>setImagemURL(data)} folder="RPG_FICHA/Personarma" /> 
+          
+          <div className="w-full sm:w-1/2 flex flex-col gap-5">
+            <InputText texto={"Nome"}   value={nome}   onChange={(data:string)=>setNome(data)}          />
+            <InputText texto={"Objeto"} value={objeto} onChange={(data:string)=>setObjeto(data)}        />
+          </div>
         </div>
 
         {/* Nível */}
         <CircularInputNumber texto={"Nível"} value={String(nivel)} onChange={(data)=>setNivel(Number(data))} ></CircularInputNumber>
 
         {/* Atributos */}
-        <div className="min-w-5/6">
-          <p className="text-center text-2xl lg:text-8xl text-black">Atributos</p>
-          <div className="grid grid-cols-3 gap-x-5 lg:gap-x-20 gap-y-5 w-full lg:px-20">
+        <div className="">
+          <p className="text-center text-4xl lg:text-7xl text-black">Atributos</p>
+          <div className="grid grid-cols-3 sm:gap-x-5 lg:gap-x-10 w-full lg:px-20">
             {atributos.map((atributo, index) => 
+            <div key={index} className="sm:w-40 xl:w-50 aspect-square border-2 border-black">
             <RectangleInputNumber
-              key={index}
               nome={atributo.nome}
               valor={atributo.valor}
               modificador={false}
               onChange={(value:string) => updateAtributo(index,value)}
-              ></RectangleInputNumber>)}
+              ></RectangleInputNumber>
+            </div>
+            )}
           </div>
         </div>
-
-        {/* Habilidades de Anima */}
-        {/*  
-        <textarea 
-        onChange={(e)=>setHabilidades(e.target.value)} 
-        value={habilidades} 
-        className="w-full border-4 border-zinc-400 p-5 outline-none"
-        placeholder="estou com preguiça de fazer tabela, então escreve assim 'nome/dano/dado/nivel'"></textarea>
-        */}
 
         <p className="text-center text-4xl lg:text-7xl text-black">Habilidades de Anima</p>
         
