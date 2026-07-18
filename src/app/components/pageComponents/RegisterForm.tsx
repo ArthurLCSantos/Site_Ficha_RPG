@@ -1,5 +1,5 @@
-import InputText from "./inputs/InputText"
-import { useRegister } from "./../hooks/useRegister"
+import InputText from "../inputs/InputText"
+import { useRegister } from "../../hooks/useRegister"
 import { SetStateAction } from "react"
 
 export default function LoginForm() {

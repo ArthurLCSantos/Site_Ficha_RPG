@@ -1,5 +1,5 @@
-import InputText from "./inputs/InputText"
-import { useLogin } from "./../hooks/useLogin"
+import InputText from "../inputs/InputText"
+import { useLogin } from "../../hooks/useLogin"
 import { SetStateAction } from "react"
 
 export default function LoginForm() {
