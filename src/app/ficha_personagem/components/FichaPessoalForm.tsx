@@ -54,6 +54,7 @@ export default function FichaPessoalForm({role,isOwner} : FichaPessoalFormProps)
         </div> 
 
         {/* Inventario */}
+        <p className="text-center text-4xl lg:text-8xl text-black">Inventário</p>
         <MyTable<ItemData>
         columns={[{key:"nome",label:"Nome"},{key:"descricao",label:"Descrição"}]}
         lista={inventario}

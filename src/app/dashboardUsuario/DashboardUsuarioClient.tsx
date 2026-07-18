@@ -6,6 +6,8 @@ import SignOutButton from "./components/SignOutButton"
 import { useDashboardUsuario } from "./hooks/useDashboardUsuario"
 import { useRouter } from "next/navigation"
 import { PersonarmaData } from "@/src/types/personarma"
+import PersonagemCard from "../components/PersonagemCard"
+import DashboardPersonagem from "../components/DashboardPersonagem"
 
 function SkeletonDashboardUsuario() {
     return <main className="min-h-screen w-full flex flex-col justify-center items-center">
@@ -25,22 +27,20 @@ export default function DashboardUsuarioClient() {
 
     return (
         <main className="min-h-screen w-full flex flex-col justify-center items-center">
-            <div className="flex flex-col gap-10 lg:w-1/2 p-20 bg-zinc-100 text-black">
-                {error && <h1 className="text-red-500 bg-black rounded-full p-2">Ocorreu um erro: error</h1>}
-                <Dashboard<PersonagemData>
-                    titulo={"Meus Personagens"}
-                    columns={[
-                        {key:"nome",label:"Nome"},
-                        {key:"origem",label:"Origem"},
-                        {key:"especializacao",label:"Especialização"}
-                    ]}
-                    lista={personagens}
-                    onCreate={()=>{router.push("/ficha_personagem")}}
-                    elementOnClick={(id:String)=>{router.push(`/ficha_personagem/${id}`)}}
-                ></Dashboard>
+            <div className="w-full lg:w-1/2 flex flex-col gap-10 px-10 py-20 bg-zinc-100 text-black">
+            
+                {error && <h1 className="text-red-500 bg-black rounded-full p-2">Ocorreu um erro: {error}</h1>}
+
+                <DashboardPersonagem
+                personagens={personagens}
+                titulo="Personagens"
+                tamanho={150}
+                onCreate={()=>{router.push("/ficha_personagem")}}
+                elementOnClick={(value:String)=>{router.push(`/ficha_personagem/${value}`)}}
+                />
 
                 <Dashboard<PersonarmaData>
-                    titulo={"Minhas Personarmas"}
+                    titulo={"Personarmas"}
                     columns={[
                         {key:"nome",label:"Nome"},
                         {key:"objeto",label:"Objeto"},

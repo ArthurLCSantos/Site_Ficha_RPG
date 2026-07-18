@@ -7,6 +7,7 @@ import SignOutButton from "../dashboardUsuario/components/SignOutButton"
 import { UsuarioData } from "@/src/types/usuario"
 import { PersonagemData } from "@/src/types/personagem"
 import { PersonarmaData } from "@/src/types/personarma"
+import DashboardPersonagem from "../components/DashboardPersonagem"
 
 export default function DashboardAdminClient({adminId}:{adminId:string}) {
     const router = useRouter()
@@ -20,16 +21,13 @@ export default function DashboardAdminClient({adminId}:{adminId:string}) {
                     <h1 className="text-4xl font-bold">{usuario.nome}</h1>
 
                     <div className="w-full flex flex-col">
-                        <Dashboard<PersonagemData>
-                            titulo={"Personagens"}
-                            columns={[
-                                {key:"nome",label:"Nome"},
-                                {key:"origem",label:"Origem"},
-                                {key:"especializacao", label:"Especialização"}
-                            ]}
-                            lista={usuario.personagens}
-                            onCreate={adminId===usuario.id ? ()=>{console.log("INDO PARA CRIAÇÃO DE FICHA_PERSONAGEM");router.push(`/ficha_personagem`)} : undefined}
-                            elementOnClick={(id:string)=>{console.log("INDO PARA EDIÇÃO DE FICHA_PERSONAGEM");router.push(`/ficha_personagem/${id}`)}}
+
+                        <DashboardPersonagem
+                        personagens={usuario.personagens}
+                        titulo="Personagens"
+                        tamanho={150}
+                        onCreate={adminId===usuario.id ? ()=>router.push(`/ficha_personagem`) : undefined}
+                        elementOnClick={(value:String)=>{router.push(`/ficha_personagem/${value}`)}}
                         />
         
                         <Dashboard<PersonarmaData>
